@@ -15,6 +15,10 @@ class Server{
 
     middelwares(){
         this.app.use(cors());
+
+        //Parsep y lectura del body
+        this.app.use(express.json());
+
         this.app.use(express.static('public'));
     }
 
