@@ -1,9 +1,11 @@
-const express = require('express')
+const express = require('express');
+const cors = require('cors');
 
 class Server{
     constructor(){
         this.app = express();
         this.port= process.env.PORT;
+        this.usersPath ='/api/users';
         
         //Middlewares
         this.middelwares();
@@ -12,33 +14,12 @@ class Server{
     }
 
     middelwares(){
+        this.app.use(cors());
         this.app.use(express.static('public'));
     }
 
     routes(){
-        this.app.get('/hello', (req, res) => {
-            res.json({
-                msg: 'get Api'
-            });
-        });
-
-        this.app.put('/hello', (req, res) => {
-            res.json({
-                msg: 'put Api'
-            });
-        });
-
-        this.app.post('/hello', (req, res) => {
-            res.json({
-                msg: 'post Api'
-            });
-        });
-
-        this.app.delete('/hello', (req, res) => {
-            res.json({
-                msg: 'delete Api'
-            });
-        });
+        this.app.use(this.usersPath, require('../routes/users'));
     }
 
     listen(){
