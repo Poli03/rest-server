@@ -1,5 +1,6 @@
 const bcryptjs = require('bcryptjs');
 const {response}= require('express');
+const res = require('express/lib/response');
 const { createJWT } = require('../helpers/createJWT');
 const User = require('../models/user');
 
@@ -42,6 +43,16 @@ const login = async(req ,res =response) =>{
     }
 }
 
+const googleSignIn = async(req, res=response) =>{
+    const {id_token}= req.body;
+
+    res.json({
+        msg: 'Todo piola',
+        id_token
+    })
+}
+
 module.exports = {
-    login
+    login,
+    googleSignIn
 }
