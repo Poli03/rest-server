@@ -2,11 +2,15 @@ const { response } = require("express");
 const { Category } = require('../models');
 
 const obtainCategories = async(req , res = response) =>{
+    const {limit=5, since= 0} = req.query;
     const query = {status: true};
 
     const [ total ,categories ]= await Promise.all([
         Category.countDocuments(query),
         Category.find(query)
+        .populate('user', 'name')
+        .skip(Number(since))
+        .limit(Number(limit))
     ]);
 
     res.json({
@@ -48,9 +52,12 @@ const createCategory = async (req , res = response)=>{
 const updateCategory = async (req , res = response) =>{
     const id = req.params.id;
     
-    const {_id, user, ...rest} = req.body;
+    const {_id, user, ...data} = req.body;
+    
+    data.name=data.name.toUpperCase();
+    data.user= req.user._id;
 
-    const category = await Category.findByIdAndUpdate(id,rest);
+    const category = await Category.findByIdAndUpdate(id,data,{new:true});
     
     res.json(category);
 }; 
@@ -58,7 +65,7 @@ const updateCategory = async (req , res = response) =>{
 const deleteCategory = async (req , res = response) =>{
     const id = req.params.id;
   
-    const category = await Category.findByIdAndUpdate(id,{status: false});
+    const category = await Category.findByIdAndUpdate(id,{status: false},{new:true});
     
     res.json(category);
 }; 

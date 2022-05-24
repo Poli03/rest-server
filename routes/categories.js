@@ -3,7 +3,7 @@ const { check }  = require('express-validator');
 
 const { createCategory, obtainCategory, obtainCategories, deleteCategory, updateCategory } = require('../controllers/createCategory');
 const { existCAtegoryToId } = require('../helpers/db-validators');
-const { validateFields, validateJWT} = require('../middlewares');
+const { validateFields, validateJWT, isAdminRole} = require('../middlewares');
 
 const router = Router();
 
@@ -22,12 +22,15 @@ router.post('/',[
 ], createCategory);
 
 router.put('/:id',[
+    validateJWT,
     check('id', 'No es un id valido').isMongoId(),
     check('id').custom(existCAtegoryToId),
     validateFields
 ], updateCategory);
 
 router.delete('/:id',[
+    validateJWT,
+    isAdminRole,
     check('id', 'No es un id valido').isMongoId(),
     check('id').custom(existCAtegoryToId),
     validateFields
