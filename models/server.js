@@ -10,7 +10,8 @@ class Server{
         this.path= {
             auth :'/api/auth',
             users :'/api/users',
-            categories:  '/api/categories'
+            categories:  '/api/categories',
+            products: '/api/products'
         }
         //conecion a base de datos
         this.connectDB();
@@ -38,6 +39,7 @@ class Server{
         this.app.use(this.path.auth, require('../routes/auth'));
         this.app.use(this.path.users, require('../routes/users'));
         this.app.use(this.path.categories, require('../routes/categories'));
+        this.app.use(this.path.products, require('../routes/products'));
     }
 
     listen(){
