@@ -11,7 +11,8 @@ class Server{
             auth :'/api/auth',
             users :'/api/users',
             categories:  '/api/categories',
-            products: '/api/products'
+            products: '/api/products',
+            search:'/api/search'
         }
         //conecion a base de datos
         this.connectDB();
@@ -37,9 +38,10 @@ class Server{
 
     routes(){
         this.app.use(this.path.auth, require('../routes/auth'));
-        this.app.use(this.path.users, require('../routes/users'));
         this.app.use(this.path.categories, require('../routes/categories'));
         this.app.use(this.path.products, require('../routes/products'));
+        this.app.use(this.path.search, require('../routes/search'));
+        this.app.use(this.path.users, require('../routes/users'));
     }
 
     listen(){
