@@ -9,6 +9,7 @@ const obtainProducts = async(req , res = response) =>{
         Product.countDocuments(query),
         Product.find(query)
         .populate('user', 'name')
+        .populate('category', 'name')
         .skip(Number(since))
         .limit(Number(limit))
     ]);
@@ -22,7 +23,9 @@ const obtainProducts = async(req , res = response) =>{
 const obtainProduct = async (req , res = response) =>{
     const id = req.params.id;
 
-    const product = await Product.findById(id);
+    const product = await Product.findById(id)
+                        .populate('user', 'name')
+                        .populate('category', 'name')
     res.json(product);
 }; 
 
@@ -42,7 +45,7 @@ const createProduct = async (req , res = response)=>{
 
     const data = {
         name,
-        category,
+        category:category._id,
         user: req.user._id
     }
 
