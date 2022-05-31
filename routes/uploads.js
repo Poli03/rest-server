@@ -3,13 +3,14 @@ const { check }  = require('express-validator');
 
 const { uploadFile, updateImage } = require('../controllers/uploads');
 const { validCollection } = require('../helpers');
-const { validateFields } = require('../middlewares');
+const { validateFields, validateContent } = require('../middlewares');
 
 const router = Router();
 
-router.post('/',uploadFile);
+router.post('/',validateContent,uploadFile);
 
 router.put('/:collection/:id',[
+    validateContent,
     check('id','El id debde ser de mongoDB').isMongoId(),
     check('collection').custom(c => validCollection(c,['user','product'])),
     validateFields

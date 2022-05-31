@@ -3,11 +3,6 @@ const { upFile } = require("../helpers/upload-file");
 const { User, Product } = require("../models");
 
 const uploadFile = async(req , res = response) =>{
-    if (!req.files || Object.keys(req.files).length === 0 || !req.files.file) {
-      res.status(400).json({msg:'No files were uploaded'});
-      return;
-    }
-  
     try {
         const fullPath=await upFile(req.files,['txt','md'],'text');
         res.json({fullPath})
