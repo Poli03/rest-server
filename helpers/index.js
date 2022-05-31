@@ -5,8 +5,8 @@ const uploadFile =require('./upload-file');
 
 
 module.exports={
-    createJWT,
-    dbValidators,
-    googleVerify,
-    uploadFile
+    ...createJWT,
+    ...dbValidators,
+    ...googleVerify,
+    ...uploadFile
 }

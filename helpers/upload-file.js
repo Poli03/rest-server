@@ -9,7 +9,7 @@ const upFile =(files, validExtensions = ['png','jpg','jpeg','gif'],folder='') =>
         const extension = nameCut[nameCut.length -1];
 
         if (!validExtensions.includes(extension)) {
-            return reject(`La extension ${extension} no es peritida , ${validExtensions}`);
+            return reject(`La extension ${extension} no es permitida , ${validExtensions}`);
         }
 
         const nameTemp = uuidv4() + '.' + extension;

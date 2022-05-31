@@ -35,10 +35,19 @@ const emailExist=  async(email = '') => {
     }
  }
 
+ const validCollection = (collection = '', cllections=[]) => {
+     const include =cllections.includes(collection);
+     if (!include) {
+         throw new Error(`La colecion ${collection} no es permitida; ${cllections}`)
+     }
+     return true;
+ }
+
 module.exports ={
     isRoleValid,
     emailExist,
     existUserToId,
     existCAtegoryToId,
-    existProductToId
+    existProductToId,
+    validCollection
 }
